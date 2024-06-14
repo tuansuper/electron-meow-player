@@ -1,0 +1,11 @@
+{
+  "name": "electron-meow-player",
+  "version": "0.0.1",
+  "description": "Meow's media player based on Electron.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Meow-On-Cloud",
+  "license": "MIT"
+}
