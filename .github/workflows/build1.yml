@@ -1,0 +1,47 @@
+name: Build Script
+
+on:
+  push:
+    branches: [ "main" ]
+    paths-ignore:
+        - "**.md"
+        - "**.spec.js"
+        - ".idea"
+        - ".vscode"
+        - ".dockerignore"
+        - "Dockerfile"
+        - ".gitignore"
+        - ".github/**"
+        - "!.github/workflows/build.yml"
+  # pull_request:
+  #   branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        os: [ windows-lastest ]
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+      
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v4.0.2
+    
+    - name: Install Dependencies
+      run: npm install
+    
+    - name: Build Release Files
+      run: npm run build
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: release_on_${{ matrix. os }}
+        path: release/
+        # retention-days: 5
